@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Список студентов</title>
+</head>
+<body>
+    <h1>Список студентов</h1>
+    <ul>
+        {% for student in students %}
+            <li>
+                <strong>Имя:</strong> {{ student.name }}<br>
+                <strong>Пол:</strong> {{ student.gender }}<br>
+                <strong>Возраст:</strong> {{ student.age }}<br>
+                <strong>Цвет волос:</strong> {{ student.hair_color }}<br>
+                <strong>Цвет глаз:</strong> {{ student.eye_color }}<br>
+            </li>
+        {% endfor %}
+    </ul>
+</body>
+</html>

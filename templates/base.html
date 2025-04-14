@@ -5,44 +5,38 @@
     <meta name="viewport"
           content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>{% block title %}{% endblock %}</title>
-    <!-- Bootstrap стили -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <!-- иконки fontawesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <!-- кастомные стили -->
-    <link rel="stylesheet" href="{{ url_for('static', filename='custom.css') }}">
+    <title>{% block title %}Flask App{% endblock %}</title>
+   <style>
+        .nav { background: #f0f0f0; padding: 10px; }
+        .nav a { margin-right: 15px; }
+        .flash-message { padding: 10px; margin: 10px 0; background: #ffeb3b; }
+    </style>
 </head>
 <body>
-
-<!-- навигация -->
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <div class="container">
-        <a class="navbar-brand" href="#">Мой личный сайт</a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
-                data-bs-target="#navbarNav" aria-controls="navbarNav"
-                aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse justify-content-end"
-             id="navbarNav">
-            <ul class="navbar-nav">
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Главная</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Обо мне</a>
-                </li>
-            </ul>
-        </div>
+ <div class="nav">
+        <a href="{{ url_for('home') }}">Главная</a>
+        {% if current_user.is_authenticated %}
+            <a href="{{ url_for('students') }}">Студенты</a>
+            <a href="{{ url_for('profile') }}">Профиль</a>
+            <a href="{{ url_for('logout') }}">Выйти</a>
+        {% else %}
+            <a href="{{ url_for('login') }}">Войти</a>
+            <a href="{{ url_for('register') }}">Регистрация</a>
+        {% endif %}
     </div>
-</nav>
 
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            {% for message in messages %}
+                <div class="flash-message">{{ message }}</div>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
 
-<div class="container my-3">
-    {% block content %}
-    {% endblock %}
-</div>
+    <div class="content">
+        {% block content %}
+        {% endblock %}
+    </div>
 
 </body>
 </html>
